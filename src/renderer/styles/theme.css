@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
+:root {
+    --brand-primary: #2676ff;
+    --brand-accent: #ff9a3c;
+    --brand-bg: #181c2b;
+    --brand-card: #232a3d;
+    --brand-text: #fff;
+    --brand-neon: #2676ff;
+    --brand-neon-accent: #ff9a3c;
+    --brand-shadow: 0 0 16px #2676ff, 0 0 32px #ff9a3c;
+    --brand-radius: 18px;
+    --brand-font: 'Orbitron', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+}
+
+body {
+    font-family: 'Orbitron', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    background: var(--brand-bg);
+    color: var(--brand-text);
+    margin: 0;
+}
+
+.card {
+    background: var(--brand-card);
+    border-radius: var(--brand-radius);
+    box-shadow: var(--brand-shadow);
+    color: var(--brand-text);
+    transition: box-shadow 0.3s, transform 0.2s;
+}
+
+.card:hover {
+    box-shadow: 0 0 32px var(--brand-neon-accent), 0 0 64px var(--brand-neon);
+    transform: translateY(-4px) scale(1.03);
+}
+
+.neon {
+    text-shadow: 0 0 8px var(--brand-neon), 0 0 16px var(--brand-neon-accent);
+    color: var(--brand-neon);
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, var(--brand-primary), var(--brand-accent));
+    color: #fff;
+    border-radius: 8px;
+    font-weight: bold;
+    box-shadow: 0 0 8px var(--brand-accent);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(90deg, var(--brand-accent), var(--brand-primary));
+    box-shadow: 0 0 16px var(--brand-primary);
+}
+
+@media (max-width: 600px) {
+    body {
+        font-size: 16px;
+    }
+
+    .card {
+        padding: 12px !important;
+    }
+}

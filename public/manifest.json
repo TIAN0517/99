@@ -1,0 +1,26 @@
+{
+    "name": "智慧瓦斯AI管理系統",
+    "short_name": "瓦斯AI",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#181c2b",
+    "theme_color": "#2676ff",
+    "description": "企業級智慧瓦斯AI管理系統，支援Gemini/DeepSeek/OpenAI，RWD、PWA、API健康檢查、品牌主題。",
+    "icons": [
+        {
+            "src": "/favicon.ico",
+            "sizes": "48x48",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "/logo192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/logo512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

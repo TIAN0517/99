@@ -1,0 +1,440 @@
+.financial-analysis {
+    padding: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid rgba(0, 212, 255, 0.1);
+}
+
+.header-content h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.header-content p {
+    color: var(--text-secondary);
+    font-size: 16px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.period-selector {
+    padding: 10px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.period-selector:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
+/* 財務指標卡片 */
+.financial-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background: var(--gradient-card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card.revenue {
+    border-color: rgba(0, 255, 136, 0.3);
+}
+
+.stat-card.cost {
+    border-color: rgba(255, 170, 0, 0.3);
+}
+
+.stat-card.profit {
+    border-color: rgba(0, 212, 255, 0.3);
+}
+
+.stat-card.margin {
+    border-color: rgba(255, 107, 53, 0.3);
+}
+
+.stat-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 32px;
+    opacity: 0.6;
+}
+
+.stat-content h3 {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.stat-change {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+}
+
+.stat-change.positive {
+    color: var(--success-color);
+}
+
+.stat-change.negative {
+    color: var(--error-color);
+}
+
+/* 分析網格 */
+.analysis-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.chart-container {
+    background: var(--gradient-card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(20px);
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.chart-header h3 {
+    font-size: 20px;
+    color: var(--text-primary);
+}
+
+.chart-legend {
+    display: flex;
+    gap: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.legend-item.revenue .legend-color {
+    background: var(--success-color);
+}
+
+.legend-item.cost .legend-color {
+    background: var(--warning-color);
+}
+
+.legend-item.profit .legend-color {
+    background: var(--primary-color);
+}
+
+.chart-content {
+    height: 280px;
+    position: relative;
+}
+
+.chart-bars {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    height: 240px;
+    padding: 0 16px;
+}
+
+.bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    max-width: 60px;
+}
+
+.bars {
+    display: flex;
+    align-items: end;
+    gap: 2px;
+    height: 200px;
+}
+
+.bar {
+    width: 8px;
+    border-radius: 2px 2px 0 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    animation: chartGrow 1s ease-out;
+}
+
+.revenue-bar {
+    background: var(--success-color);
+}
+
+.cost-bar {
+    background: var(--warning-color);
+}
+
+.profit-bar {
+    background: var(--primary-color);
+}
+
+.bar:hover {
+    opacity: 0.8;
+    transform: scaleX(1.2);
+}
+
+.bar-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    text-align: center;
+}
+
+/* 月度報表 */
+.monthly-report {
+    background: var(--gradient-card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(20px);
+}
+
+.monthly-report h3 {
+    font-size: 18px;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.report-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.report-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+}
+
+.report-item.total {
+    padding-top: 16px;
+    border-top: 2px solid var(--primary-color);
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.item-label {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.item-value {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.item-value.positive {
+    color: var(--success-color);
+}
+
+.item-value.negative {
+    color: var(--error-color);
+}
+
+.report-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 8px 0;
+}
+
+/* 成本結構分析 */
+.cost-analysis {
+    background: var(--gradient-card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(20px);
+}
+
+.cost-analysis h3 {
+    font-size: 20px;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+}
+
+.cost-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cost-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.cost-info {
+    min-width: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cost-category {
+    font-size: 14px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.cost-percentage {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.cost-bar {
+    flex: 1;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.cost-fill {
+    height: 100%;
+    background: var(--gradient-primary);
+    border-radius: 4px;
+    transition: width 1s ease-out;
+    animation: fillBar 1s ease-out;
+}
+
+.cost-amount {
+    min-width: 100px;
+    text-align: right;
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* 動畫 */
+@keyframes chartGrow {
+    from {
+        height: 0;
+    }
+
+    to {
+        height: var(--height, 100%);
+    }
+}
+
+@keyframes fillBar {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: var(--width, 100%);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .analysis-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .financial-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-bars {
+        padding: 0 8px;
+    }
+
+    .bar-group {
+        max-width: 40px;
+    }
+}

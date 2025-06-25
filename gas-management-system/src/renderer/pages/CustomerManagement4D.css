@@ -1,0 +1,572 @@
+/* 4D 客戶管理系統樣式 */
+.customer-management-4d {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+        linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Orbitron', 'Rajdhani', sans-serif;
+}
+
+/* 4D 標題區域擴展 */
+.customer-management-4d .header-4d {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+/* 4D 搜尋框 */
+.search-container-4d {
+    position: relative;
+    width: 300px;
+}
+
+.search-input-4d {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: rgba(0, 20, 40, 0.7);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 0;
+    clip-path: polygon(20px 0, 100% 0, calc(100% - 20px) 100%, 0 100%);
+    color: #00d4ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.search-input-4d::placeholder {
+    color: rgba(0, 212, 255, 0.5);
+}
+
+.search-input-4d:focus {
+    outline: none;
+    border-color: #00d4ff;
+    box-shadow:
+        0 0 20px rgba(0, 212, 255, 0.3),
+        inset 0 0 20px rgba(0, 212, 255, 0.1);
+}
+
+.search-effects {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
+    opacity: 0;
+    animation: searchScan 3s linear infinite;
+}
+
+/* 4D 客戶網格 */
+.customers-grid-4d {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.customer-card-4d {
+    position: relative;
+    padding: 1.5rem;
+    background: rgba(0, 20, 40, 0.7);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    clip-path: polygon(0 0, calc(100% - 25px) 0, 100% calc(100% - 25px), 25px 100%, 0 100%);
+    backdrop-filter: blur(15px);
+    cursor: pointer;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    animation: customerCardAppear 0.6s ease var(--delay);
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.customer-card-4d::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #00d4ff, #ff77c6, #78dbff, #00d4ff);
+    background-size: 300% 300%;
+    animation: customerBorderGlow 4s ease-in-out infinite;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.customer-card-4d:hover::before {
+    opacity: 1;
+}
+
+.customer-card-4d:hover {
+    transform: translateY(-10px) rotateX(5deg);
+    box-shadow:
+        0 20px 40px rgba(0, 212, 255, 0.3),
+        0 0 60px rgba(0, 212, 255, 0.2);
+}
+
+.customer-card-4d.selected {
+    border-color: #ff77c6;
+    box-shadow:
+        0 0 30px rgba(255, 119, 198, 0.5),
+        inset 0 0 30px rgba(255, 119, 198, 0.1);
+}
+
+/* 客戶標題 */
+.customer-header-4d {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.customer-name-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.customer-name {
+    color: #00d4ff;
+    font-size: 1.3rem;
+    margin: 0;
+    font-weight: 700;
+}
+
+.customer-type-badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background: rgba(var(--type-color), 0.2);
+    border: 1px solid rgba(var(--type-color), 0.5);
+    border-radius: 15px;
+    color: var(--type-color);
+    font-size: 0.8rem;
+    font-weight: 600;
+    width: fit-content;
+}
+
+.customer-level-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(var(--level-color), 0.2);
+    border: 1px solid rgba(var(--level-color), 0.5);
+    border-radius: 20px;
+    color: var(--level-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.level-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: levelPulse 2s ease-in-out infinite;
+}
+
+/* 客戶頭像 */
+.customer-avatar-4d {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.avatar-container {
+    position: relative;
+}
+
+.avatar-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00d4ff, #ff77c6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+.avatar-text {
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.avatar-glow {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00d4ff, #ff77c6);
+    opacity: 0.3;
+    animation: avatarGlow 3s ease-in-out infinite;
+    z-index: 1;
+}
+
+/* 聯絡信息 */
+.contact-info-4d {
+    margin-bottom: 1.5rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    background: rgba(0, 212, 255, 0.05);
+    border-left: 3px solid rgba(0, 212, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    background: rgba(0, 212, 255, 0.1);
+    border-left-color: #00d4ff;
+}
+
+.contact-icon {
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.contact-value {
+    color: #78dbff;
+    font-size: 0.9rem;
+    flex: 1;
+    word-break: break-all;
+}
+
+/* 客戶統計 */
+.customer-stats-4d {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(255, 119, 198, 0.05);
+    border: 1px solid rgba(255, 119, 198, 0.2);
+    clip-path: polygon(15px 0, 100% 0, calc(100% - 15px) 100%, 0 100%);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    text-align: center;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.stat-number {
+    color: #ff77c6;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.stat-label {
+    color: #78dbff;
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* 註冊信息 */
+.registration-info-4d {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 0.8rem;
+    background: rgba(0, 255, 127, 0.05);
+    border: 1px solid rgba(0, 255, 127, 0.2);
+    clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 100%, 15px 100%);
+}
+
+.registration-label {
+    color: #00ff7f;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.registration-date {
+    color: #78dbff;
+    font-size: 0.9rem;
+}
+
+/* 客戶操作按鈕 */
+.customer-actions-4d {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+}
+
+.customer-actions-4d .action-btn {
+    padding: 0.7rem;
+    font-size: 0.8rem;
+}
+
+.customer-actions-4d .action-btn.edit {
+    border-color: #00d4ff;
+    color: #00d4ff;
+}
+
+.customer-actions-4d .action-btn.orders {
+    border-color: #ff77c6;
+    color: #ff77c6;
+}
+
+.customer-actions-4d .action-btn.contact {
+    border-color: #00ff7f;
+    color: #00ff7f;
+}
+
+/* 客戶詳細信息面板 */
+.customer-detail-panel-4d {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 700px;
+    max-height: 80vh;
+    background: rgba(0, 20, 40, 0.95);
+    border: 2px solid #00d4ff;
+    clip-path: polygon(0 0, calc(100% - 30px) 0, 100% calc(100% - 30px), 30px 100%, 0 100%);
+    backdrop-filter: blur(20px);
+    z-index: 1000;
+    overflow-y: auto;
+    animation: customerPanelSlideIn 0.4s ease;
+}
+
+.customer-detail-panel-4d .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+.customer-detail-panel-4d .panel-header h3 {
+    color: #00d4ff;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/* 消費分析 */
+.consumption-analysis {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.analysis-chart {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+}
+
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.chart-bar {
+    width: 40px;
+    height: 120px;
+    background: rgba(0, 212, 255, 0.2);
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.chart-bar .bar-fill {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(180deg, #ff77c6, #00d4ff);
+    border-radius: 20px;
+    transition: height 1s ease;
+}
+
+.chart-label {
+    color: #78dbff;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.analysis-data {
+    flex: 1;
+}
+
+.data-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+}
+
+.data-label {
+    color: #78dbff;
+    font-size: 0.9rem;
+}
+
+.data-value {
+    color: #00d4ff;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* 動畫定義 */
+@keyframes customerCardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(50px) rotateX(30deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
+}
+
+@keyframes customerBorderGlow {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes levelPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes avatarGlow {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.6;
+    }
+}
+
+@keyframes searchScan {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes customerPanelSlideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* 響應式設計 */
+@media (max-width: 1200px) {
+    .customers-grid-4d {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+
+    .header-actions {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .search-container-4d {
+        width: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .customer-management-4d {
+        padding: 1rem;
+    }
+
+    .customers-grid-4d {
+        grid-template-columns: 1fr;
+    }
+
+    .customer-management-4d .header-4d {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .customer-actions-4d {
+        grid-template-columns: 1fr;
+    }
+
+    .consumption-analysis {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .customer-detail-panel-4d {
+        width: 95%;
+        max-height: 90vh;
+    }
+}

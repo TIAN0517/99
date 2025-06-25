@@ -1,0 +1,954 @@
+/* 4D 產品管理系統樣式 */
+.product-management-4d {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+        linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Orbitron', 'Rajdhani', sans-serif;
+}
+
+/* 4D 標題區域 */
+.header-4d {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.header-content-4d {
+    position: relative;
+}
+
+.title-4d {
+    position: relative;
+    margin: 0;
+    margin-bottom: 0.5rem;
+}
+
+.hologram-text {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, #00d4ff, #ff77c6, #78dbff);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: hologramShift 3s ease-in-out infinite;
+    text-shadow:
+        0 0 20px rgba(0, 212, 255, 0.5),
+        0 0 40px rgba(255, 119, 198, 0.3);
+}
+
+.scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+    animation: scanMove 2s linear infinite;
+}
+
+.subtitle-4d {
+    color: #78dbff;
+    font-size: 1.1rem;
+    margin: 0;
+    opacity: 0.8;
+    letter-spacing: 1px;
+}
+
+/* 4D 按鈕 */
+.btn-4d {
+    position: relative;
+    padding: 1rem 2rem;
+    background: transparent;
+    border: 1px solid #00d4ff;
+    border-radius: 0;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 100%, 20px 100%);
+    color: #00d4ff;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.btn-4d:hover {
+    background: rgba(0, 212, 255, 0.1);
+    box-shadow:
+        0 0 20px rgba(0, 212, 255, 0.5),
+        inset 0 0 20px rgba(0, 212, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.btn-glow {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.4), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-4d:hover .btn-glow {
+    left: 100%;
+}
+
+.btn-text {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* 4D 統計面板 */
+.stats-panel-4d {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card-4d {
+    position: relative;
+    padding: 1.5rem;
+    background: rgba(0, 20, 40, 0.6);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    clip-path: polygon(0 0, calc(100% - 15px) 0, 100% calc(100% - 15px), 15px 100%, 0 100%);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.stat-card-4d::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(255, 119, 198, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.stat-card-4d:hover::before {
+    opacity: 1;
+}
+
+.stat-card-4d:hover {
+    transform: translateY(-5px);
+    box-shadow:
+        0 10px 30px rgba(0, 212, 255, 0.3),
+        0 0 50px rgba(0, 212, 255, 0.2);
+}
+
+.stat-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.pulse-cyan {
+    animation: pulseCyan 2s ease-in-out infinite;
+}
+
+.pulse-red {
+    animation: pulseRed 2s ease-in-out infinite;
+}
+
+.pulse-green {
+    animation: pulseGreen 2s ease-in-out infinite;
+}
+
+.pulse-magenta {
+    animation: pulseMagenta 2s ease-in-out infinite;
+}
+
+.stat-content {
+    position: relative;
+    z-index: 2;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #00d4ff;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value.critical {
+    color: #ff4757;
+}
+
+.stat-label {
+    color: #78dbff;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* 能量條 */
+.energy-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(0, 212, 255, 0.2);
+    overflow: hidden;
+}
+
+.energy-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00d4ff, #78dbff);
+    transition: width 1s ease;
+    position: relative;
+}
+
+.energy-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    animation: energyFlow 2s linear infinite;
+}
+
+.energy-fill.critical {
+    background: linear-gradient(90deg, #ff4757, #ff6b7a);
+}
+
+/* 4D 產品網格 */
+.products-grid-4d {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.product-card-4d {
+    position: relative;
+    padding: 1.5rem;
+    background: rgba(0, 20, 40, 0.7);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% calc(100% - 20px), 20px 100%, 0 100%);
+    backdrop-filter: blur(15px);
+    cursor: pointer;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    animation: cardAppear 0.6s ease var(--delay);
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.product-card-4d::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #00d4ff, #ff77c6, #78dbff, #00d4ff);
+    background-size: 300% 300%;
+    animation: borderGlow 4s ease-in-out infinite;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.product-card-4d:hover::before {
+    opacity: 1;
+}
+
+.card-hologram {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        linear-gradient(45deg, transparent 48%, rgba(0, 212, 255, 0.1) 50%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, rgba(255, 119, 198, 0.1) 50%, transparent 52%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.product-card-4d:hover .card-hologram {
+    opacity: 1;
+}
+
+.card-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% calc(100% - 20px), 20px 100%, 0 100%);
+    background: transparent;
+    border: 1px solid rgba(0, 212, 255, 0.5);
+    pointer-events: none;
+}
+
+.product-card-4d:hover {
+    transform: translateY(-10px) rotateX(5deg);
+    box-shadow:
+        0 20px 40px rgba(0, 212, 255, 0.3),
+        0 0 60px rgba(0, 212, 255, 0.2);
+}
+
+.product-card-4d.selected {
+    border-color: #ff77c6;
+    box-shadow:
+        0 0 30px rgba(255, 119, 198, 0.5),
+        inset 0 0 30px rgba(255, 119, 198, 0.1);
+}
+
+/* 產品標題 */
+.product-header-4d {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.product-title h3 {
+    color: #00d4ff;
+    font-size: 1.3rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.product-size {
+    color: #78dbff;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* 狀態指示器 */
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-indicator.optimal {
+    background: rgba(0, 255, 127, 0.2);
+    color: #00ff7f;
+    border: 1px solid #00ff7f;
+}
+
+.status-indicator.warning {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+    border: 1px solid #ffc107;
+}
+
+.status-indicator.critical {
+    background: rgba(255, 71, 87, 0.2);
+    color: #ff4757;
+    border: 1px solid #ff4757;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: statusPulse 2s ease-in-out infinite;
+}
+
+/* 3D 產品視覺化 */
+.product-visual {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.product-3d-model {
+    position: relative;
+    width: 60px;
+    height: 80px;
+}
+
+.gas-cylinder {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.cylinder-body {
+    width: 40px;
+    height: 60px;
+    background: linear-gradient(180deg, #4a90e2, #2980b9);
+    border-radius: 20px 20px 5px 5px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow:
+        inset -5px 0 10px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(74, 144, 226, 0.3);
+}
+
+.cylinder-valve {
+    width: 20px;
+    height: 15px;
+    background: #34495e;
+    border-radius: 10px 10px 0 0;
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 10px rgba(52, 73, 94, 0.5);
+}
+
+/* 產品指標 */
+.product-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.metric-item {
+    text-align: center;
+}
+
+.metric-label {
+    display: block;
+    color: #78dbff;
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+    opacity: 0.8;
+}
+
+.metric-value {
+    display: block;
+    color: #00d4ff;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.metric-value.price {
+    color: #00ff7f;
+}
+
+.metric-value.profit {
+    color: #ff77c6;
+}
+
+/* 庫存監控 */
+.stock-monitor {
+    margin-bottom: 1.5rem;
+}
+
+.stock-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.stock-label {
+    color: #78dbff;
+    font-size: 0.9rem;
+}
+
+.stock-value {
+    color: #00d4ff;
+    font-weight: 600;
+}
+
+.stock-bar {
+    position: relative;
+    height: 8px;
+    background: rgba(0, 212, 255, 0.2);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.stock-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s ease;
+    position: relative;
+}
+
+.stock-fill.optimal {
+    background: linear-gradient(90deg, #00ff7f, #32d74b);
+}
+
+.stock-fill.warning {
+    background: linear-gradient(90deg, #ffc107, #ff9500);
+}
+
+.stock-fill.critical {
+    background: linear-gradient(90deg, #ff4757, #ff6b7a);
+}
+
+.stock-scanner {
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    animation: stockScan 3s linear infinite;
+}
+
+/* 供應商信息 */
+.supplier-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 0.5rem 0;
+    border-top: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.supplier-label {
+    color: #78dbff;
+    font-size: 0.9rem;
+}
+
+.supplier-name {
+    color: #00d4ff;
+    font-weight: 600;
+}
+
+/* 產品操作按鈕 */
+.product-actions-4d {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.action-btn {
+    flex: 1;
+    position: relative;
+    padding: 0.8rem;
+    background: transparent;
+    border: 1px solid;
+    border-radius: 0;
+    clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+    color: currentColor;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.action-btn.edit {
+    border-color: #00d4ff;
+    color: #00d4ff;
+}
+
+.action-btn.restock {
+    border-color: #00ff7f;
+    color: #00ff7f;
+}
+
+.action-btn:hover {
+    background: currentColor;
+    color: #0a0a1a;
+    transform: translateY(-2px);
+}
+
+.btn-hologram {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.action-btn:hover .btn-hologram {
+    left: 100%;
+}
+
+/* 更新時間戳 */
+.update-timestamp {
+    color: #78dbff;
+    font-size: 0.7rem;
+    opacity: 0.6;
+    text-align: center;
+}
+
+/* 詳細信息面板 */
+.product-detail-panel-4d {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    background: rgba(0, 20, 40, 0.95);
+    border: 2px solid #00d4ff;
+    clip-path: polygon(0 0, calc(100% - 30px) 0, 100% calc(100% - 30px), 30px 100%, 0 100%);
+    backdrop-filter: blur(20px);
+    z-index: 1000;
+    overflow-y: auto;
+    animation: panelSlideIn 0.4s ease;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+.panel-header h3 {
+    color: #00d4ff;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.close-btn {
+    background: transparent;
+    border: 1px solid #ff77c6;
+    color: #ff77c6;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background: #ff77c6;
+    color: #0a0a1a;
+}
+
+.detail-content {
+    padding: 1.5rem;
+}
+
+.detail-section {
+    margin-bottom: 2rem;
+}
+
+.detail-section h4 {
+    color: #78dbff;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.detail-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+}
+
+.detail-item .label {
+    color: #78dbff;
+}
+
+.detail-item .value {
+    color: #00d4ff;
+    font-weight: 600;
+}
+
+/* 庫存分析 */
+.stock-analysis {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.analysis-chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.chart-bar {
+    width: 40px;
+    height: 150px;
+    background: rgba(0, 212, 255, 0.2);
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(180deg, #00d4ff, #78dbff);
+    border-radius: 20px;
+    transition: height 1s ease;
+}
+
+.chart-label {
+    color: #78dbff;
+    font-size: 0.9rem;
+}
+
+.analysis-data {
+    flex: 1;
+}
+
+.analysis-data p {
+    color: #00d4ff;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    background: rgba(0, 212, 255, 0.1);
+    border-left: 3px solid #00d4ff;
+}
+
+/* 掃描線覆蓋 */
+.scanner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.scan-line-horizontal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+    animation: scanHorizontal 4s linear infinite;
+}
+
+.scan-line-vertical {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #ff77c6, transparent);
+    animation: scanVertical 5s linear infinite;
+}
+
+/* 動畫定義 */
+@keyframes hologramShift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes scanMove {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(50px) rotateX(30deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
+}
+
+@keyframes borderGlow {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes energyFlow {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes statusPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes stockScan {
+    0% {
+        left: 0;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes pulseCyan {
+
+    0%,
+    100% {
+        text-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+    }
+
+    50% {
+        text-shadow: 0 0 30px rgba(0, 212, 255, 1), 0 0 40px rgba(0, 212, 255, 0.5);
+    }
+}
+
+@keyframes pulseRed {
+
+    0%,
+    100% {
+        text-shadow: 0 0 20px rgba(255, 71, 87, 0.8);
+    }
+
+    50% {
+        text-shadow: 0 0 30px rgba(255, 71, 87, 1), 0 0 40px rgba(255, 71, 87, 0.5);
+    }
+}
+
+@keyframes pulseGreen {
+
+    0%,
+    100% {
+        text-shadow: 0 0 20px rgba(0, 255, 127, 0.8);
+    }
+
+    50% {
+        text-shadow: 0 0 30px rgba(0, 255, 127, 1), 0 0 40px rgba(0, 255, 127, 0.5);
+    }
+}
+
+@keyframes pulseMagenta {
+
+    0%,
+    100% {
+        text-shadow: 0 0 20px rgba(255, 119, 198, 0.8);
+    }
+
+    50% {
+        text-shadow: 0 0 30px rgba(255, 119, 198, 1), 0 0 40px rgba(255, 119, 198, 0.5);
+    }
+}
+
+@keyframes panelSlideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes scanHorizontal {
+    0% {
+        top: 0;
+    }
+
+    100% {
+        top: 100%;
+    }
+}
+
+@keyframes scanVertical {
+    0% {
+        left: 0;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+/* 響應式設計 */
+@media (max-width: 1200px) {
+    .products-grid-4d {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+
+    .stats-panel-4d {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .product-management-4d {
+        padding: 1rem;
+    }
+
+    .header-4d {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .hologram-text {
+        font-size: 2rem;
+    }
+
+    .products-grid-4d {
+        grid-template-columns: 1fr;
+    }
+
+    .product-detail-panel-4d {
+        width: 95%;
+        max-height: 90vh;
+    }
+
+    .stock-analysis {
+        flex-direction: column;
+        text-align: center;
+    }
+}

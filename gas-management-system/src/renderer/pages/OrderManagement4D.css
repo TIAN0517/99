@@ -1,0 +1,421 @@
+/* 4D 訂單管理系統樣式 */
+.order-management-4d {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+        linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Orbitron', 'Rajdhani', sans-serif;
+}
+
+/* 統計面板樣式繼承自產品管理 */
+.order-management-4d .stats-panel-4d {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.order-management-4d .stat-card-4d {
+    position: relative;
+    padding: 1.5rem;
+    background: rgba(0, 20, 40, 0.6);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    clip-path: polygon(0 0, calc(100% - 15px) 0, 100% calc(100% - 15px), 15px 100%, 0 100%);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.order-management-4d .stat-card-4d:hover {
+    transform: translateY(-5px);
+    box-shadow:
+        0 10px 30px rgba(0, 212, 255, 0.3),
+        0 0 50px rgba(0, 212, 255, 0.2);
+}
+
+.order-management-4d .stat-value.warning {
+    color: #ffc107;
+}
+
+.order-management-4d .energy-fill.warning {
+    background: linear-gradient(90deg, #ffc107, #ff9500);
+}
+
+/* 4D 訂單容器 */
+.orders-container-4d {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.order-card-4d {
+    position: relative;
+    padding: 1.5rem;
+    background: rgba(0, 20, 40, 0.7);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    clip-path: polygon(0 0, calc(100% - 25px) 0, 100% calc(100% - 25px), 25px 100%, 0 100%);
+    backdrop-filter: blur(15px);
+    transition: all 0.4s ease;
+    overflow: hidden;
+    animation: orderCardAppear 0.6s ease var(--delay);
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.order-card-4d::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #00d4ff, #ff77c6, #78dbff, #00d4ff);
+    background-size: 300% 300%;
+    animation: orderBorderGlow 4s ease-in-out infinite;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.order-card-4d:hover::before {
+    opacity: 1;
+}
+
+.order-card-4d:hover {
+    transform: translateY(-10px) rotateX(5deg);
+    box-shadow:
+        0 20px 40px rgba(0, 212, 255, 0.3),
+        0 0 60px rgba(0, 212, 255, 0.2);
+}
+
+/* 訂單標題 */
+.order-header-4d {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.order-id {
+    display: flex;
+    flex-direction: column;
+}
+
+.id-label {
+    color: #78dbff;
+    font-size: 0.8rem;
+    opacity: 0.8;
+    margin-bottom: 0.3rem;
+}
+
+.id-value {
+    color: #00d4ff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: 'Orbitron', monospace;
+}
+
+/* 狀態徽章 */
+.status-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(var(--status-color), 0.2);
+    border: 1px solid rgba(var(--status-color), 0.5);
+    border-radius: 20px;
+    color: var(--status-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: statusPulse 2s ease-in-out infinite;
+}
+
+/* 客戶信息 */
+.customer-info-4d {
+    margin-bottom: 1.5rem;
+}
+
+.customer-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.customer-name {
+    color: #00d4ff;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.customer-phone {
+    color: #78dbff;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.order-time {
+    color: #78dbff;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+/* 產品列表 */
+.products-list-4d {
+    margin-bottom: 1.5rem;
+}
+
+.products-title {
+    color: #78dbff;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+    padding-bottom: 0.5rem;
+}
+
+.product-item-4d {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.8rem;
+    margin-bottom: 0.5rem;
+    background: rgba(0, 212, 255, 0.05);
+    border: 1px solid rgba(0, 212, 255, 0.1);
+    clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+    transition: all 0.3s ease;
+}
+
+.product-item-4d:hover {
+    background: rgba(0, 212, 255, 0.1);
+    border-color: rgba(0, 212, 255, 0.3);
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-name {
+    color: #00d4ff;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+
+.product-spec {
+    color: #78dbff;
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.product-quantity {
+    color: #ff77c6;
+    font-weight: 600;
+    text-align: center;
+}
+
+.product-price {
+    color: #00ff7f;
+    font-weight: 600;
+    text-align: right;
+}
+
+/* 配送信息 */
+.delivery-info-4d {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(255, 119, 198, 0.05);
+    border: 1px solid rgba(255, 119, 198, 0.2);
+    clip-path: polygon(15px 0, 100% 0, calc(100% - 15px) 100%, 0 100%);
+}
+
+.delivery-label {
+    color: #ff77c6;
+    font-weight: 600;
+    margin-right: 0.5rem;
+}
+
+.delivery-address {
+    color: #78dbff;
+}
+
+/* 訂單總額 */
+.order-total-4d {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(0, 255, 127, 0.1);
+    border: 1px solid rgba(0, 255, 127, 0.3);
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 100%, 20px 100%);
+}
+
+.total-label {
+    color: #00ff7f;
+    font-weight: 600;
+}
+
+.total-amount {
+    color: #00ff7f;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(0, 255, 127, 0.5);
+}
+
+/* 操作按鈕 */
+.order-actions-4d {
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.action-btn {
+    flex: 1;
+    position: relative;
+    padding: 0.8rem;
+    background: transparent;
+    border: 1px solid;
+    border-radius: 0;
+    clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+    color: currentColor;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.action-btn.process {
+    border-color: #00d4ff;
+    color: #00d4ff;
+}
+
+.action-btn.complete {
+    border-color: #00ff7f;
+    color: #00ff7f;
+}
+
+.action-btn.cancel {
+    border-color: #ff4757;
+    color: #ff4757;
+}
+
+.action-btn.view {
+    border-color: #ff77c6;
+    color: #ff77c6;
+}
+
+.action-btn:hover {
+    background: currentColor;
+    color: #0a0a1a;
+    transform: translateY(-2px);
+}
+
+.btn-hologram {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.action-btn:hover .btn-hologram {
+    left: 100%;
+}
+
+/* 交付時間 */
+.delivery-time {
+    color: #78dbff;
+    font-size: 0.8rem;
+    opacity: 0.7;
+    text-align: center;
+    font-style: italic;
+}
+
+/* 動畫定義 */
+@keyframes orderCardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(50px) rotateX(30deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
+}
+
+@keyframes orderBorderGlow {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes statusPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* 響應式設計 */
+@media (max-width: 1200px) {
+    .orders-container-4d {
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .order-management-4d {
+        padding: 1rem;
+    }
+
+    .orders-container-4d {
+        grid-template-columns: 1fr;
+    }
+
+    .product-item-4d {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 0.5rem;
+    }
+
+    .customer-detail {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .order-actions-4d {
+        flex-direction: column;
+    }
+}

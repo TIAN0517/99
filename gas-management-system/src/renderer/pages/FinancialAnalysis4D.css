@@ -1,0 +1,607 @@
+/* 4D 財務分析系統樣式 */
+.financial-analysis-4d {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+        linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Orbitron', 'Rajdhani', sans-serif;
+}
+
+/* 財務統計面板特殊樣式 */
+.financial-analysis-4d .stat-value.expense {
+    color: #ff4757;
+}
+
+.financial-analysis-4d .stat-value.profit {
+    color: #00ff7f;
+}
+
+.financial-analysis-4d .energy-fill.expense {
+    background: linear-gradient(90deg, #ff4757, #ff6b7a);
+}
+
+.financial-analysis-4d .energy-fill.profit {
+    background: linear-gradient(90deg, #00ff7f, #32d74b);
+}
+
+/* 4D 圖表容器 */
+.charts-container-4d {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.chart-card-4d {
+    background: rgba(0, 20, 40, 0.7);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    clip-path: polygon(0 0, calc(100% - 30px) 0, 100% calc(100% - 30px), 30px 100%, 0 100%);
+    backdrop-filter: blur(15px);
+    padding: 2rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.chart-card-4d::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #00d4ff, #ff77c6, #78dbff, #00d4ff);
+    background-size: 300% 300%;
+    animation: chartBorderGlow 6s ease-in-out infinite;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.chart-card-4d:hover::before {
+    opacity: 0.5;
+}
+
+.chart-card-4d:hover {
+    transform: translateY(-5px);
+    box-shadow:
+        0 15px 35px rgba(0, 212, 255, 0.3),
+        0 0 50px rgba(0, 212, 255, 0.2);
+}
+
+/* 圖表標題 */
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.chart-title {
+    color: #00d4ff;
+    font-size: 1.3rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.chart-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.control-btn {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    color: #78dbff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+
+.control-btn.active,
+.control-btn:hover {
+    background: rgba(0, 212, 255, 0.2);
+    border-color: #00d4ff;
+    color: #00d4ff;
+}
+
+/* 營收趨勢圖 */
+.revenue-chart-4d {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: 300px;
+    padding: 2rem 1rem;
+    position: relative;
+}
+
+.chart-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    max-width: 80px;
+}
+
+.column-group {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 250px;
+    margin-bottom: 1rem;
+}
+
+.chart-bar {
+    width: 18px;
+    min-height: 10px;
+    border-radius: 9px 9px 0 0;
+    position: relative;
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.chart-bar.revenue {
+    background: linear-gradient(180deg, #00d4ff, #0fb4d4);
+}
+
+.chart-bar.expenses {
+    background: linear-gradient(180deg, #ff4757, #d63031);
+}
+
+.chart-bar.profit {
+    background: linear-gradient(180deg, #00ff7f, #00b894);
+}
+
+.chart-bar:hover {
+    transform: scale(1.1);
+}
+
+.chart-bar::after {
+    content: attr(data-value);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.chart-bar:hover::after {
+    opacity: 1;
+}
+
+.bar-glow {
+    position: absolute;
+    top: 0;
+    left: -2px;
+    right: -2px;
+    bottom: 0;
+    background: inherit;
+    border-radius: inherit;
+    filter: blur(4px);
+    opacity: 0.3;
+    z-index: -1;
+}
+
+.chart-label {
+    color: #78dbff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* 圖表圖例 */
+.chart-legend {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 212, 255, 0.1);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #78dbff;
+    font-size: 0.9rem;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.legend-color.revenue {
+    background: linear-gradient(45deg, #00d4ff, #0fb4d4);
+}
+
+.legend-color.expenses {
+    background: linear-gradient(45deg, #ff4757, #d63031);
+}
+
+.legend-color.profit {
+    background: linear-gradient(45deg, #00ff7f, #00b894);
+}
+
+/* 圓餅圖 */
+.pie-chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
+.pie-chart-4d {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: conic-gradient(#00ff7f 0% 33%,
+            #ff4757 33% 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pieRotate 10s linear infinite;
+}
+
+.pie-center {
+    width: 100px;
+    height: 100px;
+    background: rgba(0, 20, 40, 0.9);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #00d4ff;
+}
+
+.center-value {
+    color: #00d4ff;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.center-label {
+    color: #78dbff;
+    font-size: 0.7rem;
+    margin-top: 0.2rem;
+}
+
+/* 交易記錄 */
+.transactions-container-4d {
+    margin-bottom: 3rem;
+}
+
+.transactions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.transactions-title {
+    color: #00d4ff;
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.filter-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.filter-btn {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    color: #78dbff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+    background: rgba(0, 212, 255, 0.2);
+    border-color: #00d4ff;
+    color: #00d4ff;
+}
+
+.transactions-list-4d {
+    display: grid;
+    gap: 1rem;
+}
+
+.transaction-card-4d {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(0, 20, 40, 0.6);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    clip-path: polygon(20px 0, 100% 0, calc(100% - 20px) 100%, 0 100%);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    animation: transactionAppear 0.6s ease var(--delay);
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.transaction-card-4d:hover {
+    transform: translateX(10px);
+    border-color: #00d4ff;
+    box-shadow:
+        0 5px 20px rgba(0, 212, 255, 0.3),
+        inset 0 0 20px rgba(0, 212, 255, 0.1);
+}
+
+.transaction-card-4d.income {
+    border-left: 3px solid #00ff7f;
+}
+
+.transaction-card-4d.expense {
+    border-left: 3px solid #ff4757;
+}
+
+.transaction-icon {
+    font-size: 2rem;
+    width: 50px;
+    text-align: center;
+}
+
+.transaction-details {
+    flex: 1;
+}
+
+.transaction-description {
+    color: #00d4ff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.transaction-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.transaction-date {
+    color: #78dbff;
+}
+
+.transaction-category {
+    color: #ff77c6;
+}
+
+.transaction-amount {
+    font-size: 1.3rem;
+    font-weight: 700;
+    min-width: 150px;
+    text-align: right;
+}
+
+.transaction-amount.income {
+    color: #00ff7f;
+}
+
+.transaction-amount.expense {
+    color: #ff4757;
+}
+
+.transaction-glow {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.transaction-card-4d:hover .transaction-glow {
+    left: 100%;
+}
+
+/* 財務健康度儀表板 */
+.health-dashboard-4d {
+    background: rgba(0, 20, 40, 0.7);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    clip-path: polygon(0 0, calc(100% - 30px) 0, 100% calc(100% - 30px), 30px 100%, 0 100%);
+    backdrop-filter: blur(15px);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-title {
+    color: #00d4ff;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.health-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.health-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.metric-label {
+    color: #78dbff;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.metric-gauge {
+    position: relative;
+    height: 20px;
+    background: rgba(0, 212, 255, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.gauge-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff4757, #ffc107, #00ff7f);
+    border-radius: 10px;
+    transition: width 2s ease;
+    position: relative;
+}
+
+.gauge-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: gaugeFlow 3s linear infinite;
+}
+
+.gauge-value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #00d4ff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+/* 動畫定義 */
+@keyframes chartBorderGlow {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes pieRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes transactionAppear {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes gaugeFlow {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* 響應式設計 */
+@media (max-width: 1200px) {
+    .charts-container-4d {
+        grid-template-columns: 1fr;
+    }
+
+    .revenue-chart-4d {
+        height: 250px;
+    }
+
+    .chart-legend {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .financial-analysis-4d {
+        padding: 1rem;
+    }
+
+    .financial-analysis-4d .stats-panel-4d {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .transactions-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .transaction-card-4d {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .transaction-amount {
+        min-width: auto;
+        text-align: center;
+    }
+
+    .health-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .column-group {
+        gap: 2px;
+    }
+
+    .chart-bar {
+        width: 14px;
+    }
+}

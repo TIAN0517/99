@@ -1,0 +1,372 @@
+/* 4D科技感主题 - 无边框设计 */
+
+/* 全局变量 - 4D科技感色彩系统 */
+:root {
+  /* 主色调 - 科技蓝 */
+  --primary-blue: #00d4ff;
+  --primary-blue-dark: #0099cc;
+  --primary-blue-light: #66e0ff;
+  --primary-blue-glow: rgba(0, 212, 255, 0.4);
+
+  /* 次要色调 - 量子紫 */
+  --secondary-purple: #8a2be2;
+  --secondary-purple-dark: #6a1b9a;
+  --secondary-purple-light: #ba68c8;
+  --secondary-purple-glow: rgba(138, 43, 226, 0.3);
+
+  /* 渐变色 */
+  --gradient-primary: linear-gradient(135deg, #00d4ff 0%, #8a2be2 100%);
+  --gradient-secondary: linear-gradient(45deg, #ff6b35 0%, #f7931e 100%);
+  --gradient-danger: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+  --gradient-success: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+  --gradient-warning: linear-gradient(135deg, #ffaa00 0%, #ff8800 100%);
+
+  /* 背景渐变 */
+  --bg-primary: linear-gradient(135deg,
+      rgba(0, 0, 0, 0.95) 0%,
+      rgba(20, 30, 48, 0.98) 30%,
+      rgba(40, 60, 100, 0.92) 100%);
+  --bg-secondary: linear-gradient(45deg,
+      rgba(0, 212, 255, 0.05) 0%,
+      rgba(138, 43, 226, 0.05) 100%);
+  --bg-card: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.02) 100%);
+  --bg-glass: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.05) 100%);
+
+  /* 文字颜色 */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.8);
+  --text-muted: rgba(255, 255, 255, 0.6);
+  --text-accent: #00d4ff;
+
+  /* 边框和阴影 */
+  --border-primary: 1px solid rgba(0, 212, 255, 0.3);
+  --border-secondary: 1px solid rgba(255, 255, 255, 0.1);
+  --border-glow: 0 0 20px rgba(0, 212, 255, 0.5);
+
+  --shadow-primary: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 40px rgba(0, 212, 255, 0.3);
+  --shadow-inset: inset 0 1px 2px rgba(255, 255, 255, 0.1);
+
+  /* 动画时间 */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --transition-bounce: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* 空间和圆角 */
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 24px;
+  --border-radius-full: 50%;
+
+  /* Z-index 层级 */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-toast: 1080;
+}
+
+/* 全局重置和基础样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+
+/* 无边框窗口样式 */
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0;
+  overflow: hidden;
+  border: none;
+  box-shadow: none;
+}
+
+/* 4D科技感滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gradient-primary);
+  border-radius: 4px;
+  box-shadow: var(--shadow-glow);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gradient-secondary);
+  box-shadow: 0 0 15px var(--primary-blue-glow);
+}
+
+/* 4D科技感按钮基础类 */
+.btn-4d {
+  position: relative;
+  padding: 12px 24px;
+  background: var(--bg-glass);
+  border: var(--border-primary);
+  border-radius: var(--border-radius-md);
+  color: var(--text-primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-4d::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-primary);
+  transition: left var(--transition-normal);
+  z-index: -1;
+}
+
+.btn-4d:hover::before {
+  left: 0;
+}
+
+.btn-4d:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+  border-color: var(--primary-blue);
+}
+
+.btn-4d:active {
+  transform: translateY(0);
+}
+
+/* 4D科技感卡片 */
+.card-4d {
+  background: var(--bg-card);
+  border: var(--border-secondary);
+  border-radius: var(--border-radius-lg);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-primary);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-4d::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--gradient-primary);
+  opacity: 0.5;
+}
+
+.card-4d:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary-blue);
+  box-shadow: var(--shadow-glow);
+}
+
+/* 输入框4D样式 */
+.input-4d {
+  background: var(--bg-glass);
+  border: var(--border-secondary);
+  border-radius: var(--border-radius-md);
+  padding: 12px 16px;
+  color: var(--text-primary);
+  font-size: 14px;
+  transition: all var(--transition-normal);
+  backdrop-filter: blur(20px);
+}
+
+.input-4d::placeholder {
+  color: var(--text-muted);
+}
+
+.input-4d:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+/* 4D科技感动画 */
+@keyframes pulse-4d {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes glow-4d {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
+  }
+}
+
+@keyframes slide-in-4d {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-4d {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes rotate-3d {
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+/* 辅助类 */
+.animate-pulse {
+  animation: pulse-4d 2s infinite;
+}
+
+.animate-glow {
+  animation: glow-4d 2s infinite;
+}
+
+.animate-slide-in {
+  animation: slide-in-4d 0.6s ease-out;
+}
+
+.animate-float {
+  animation: float-4d 3s ease-in-out infinite;
+}
+
+.animate-rotate {
+  animation: rotate-3d 10s linear infinite;
+}
+
+/* 文字效果 */
+.text-gradient {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-glow {
+  text-shadow: 0 0 20px var(--primary-blue-glow);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .btn-4d {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .card-4d {
+    border-radius: var(--border-radius-md);
+  }
+}
+
+/* 全屏无边框样式 */
+.fullscreen-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-primary);
+  z-index: var(--z-modal);
+  display: flex;
+  flex-direction: column;
+}
+
+/* 禁用系统边框和标题栏 */
+.no-system-chrome {
+  -webkit-app-region: no-drag;
+  border: none !important;
+  outline: none !important;
+}
+
+/* 自定义标题栏区域 */
+.custom-titlebar {
+  -webkit-app-region: drag;
+  height: 0;
+  /* 完全隐藏标题栏 */
+  background: transparent;
+}
+
+/* 确保所有交互元素不受拖拽影响 */
+button,
+input,
+select,
+textarea,
+a,
+.interactive {
+  -webkit-app-region: no-drag;
+}
